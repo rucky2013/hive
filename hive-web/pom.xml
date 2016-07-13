@@ -75,6 +75,11 @@
 		<artifactId>jsp-api</artifactId>
 		<scope>provided</scope> 
 	</dependency> 
+
+	<dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>jstl</artifactId>
+	</dependency>     
      
     <!-- log start 依赖 slf4j-api和log4j-api jar包 -->  
     <dependency>

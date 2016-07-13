@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:p="http://www.springframework.org/schema/p"  
+    xmlns:mvc="http://www.springframework.org/schema/mvc" 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd   
+	   http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+	">
+	
+    <!-- 即如果当前路径是/ 则重定向到/admin/index-->
+    <!-- <mvc:view-controller path="/" view-name="redirect:/admin/index"/> -->
+	<!-- 如果当前路径是/ 则交给相应的视图解析器直接解析为视图  -->
+	<mvc:view-controller path="/login" view-name="login"/>
+	<mvc:view-controller path="/register" view-name="register"/>
+	
+	
+	<mvc:resources mapping="/css/**" location="/css/" />
+	<mvc:resources mapping="/fonts/**" location="/fonts/" />
+	<mvc:resources mapping="/img/**" location="/img/" />
+	<mvc:resources mapping="/js/**" location="/js/" />
+	<mvc:resources mapping="/plugins/**" location="/plugins/" />
+	
+	<!--
+	InternalResourceViewResolver默认的就是JstlView所以这里就不用配置viewClass了 
+	-->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+ 
+</beans> 
