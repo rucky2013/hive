@@ -9,22 +9,46 @@
 	   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd   
 	   http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
 	   http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd   
-	
 	">
-	
-	<mvc:annotation-driven >
+    <!-- 自动扫描-->
+    <context:component-scan base-package="com.hive" use-default-filters="false">
+    	<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+<!-- 	<mvc:annotation-driven >
 		<mvc:message-converters register-defaults="true">
-            <!-- 将StringHttpMessageConverter的默认编码设为UTF-8 -->
+            将StringHttpMessageConverter的默认编码设为UTF-8
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
                 <constructor-arg value="UTF-8"/>
             </bean>
         </mvc:message-converters>
-    </mvc:annotation-driven>    
-	<!-- 自动扫描-->
-    <context:component-scan base-package="com.hive" use-default-filters="false">
-    	<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-    </context:component-scan>
-    
+    </mvc:annotation-driven>     
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />   -->
+	
+	
+	<bean class="com.hive.apiversion.CustomRequestMappingHandlerMapping" />  
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">  
+	    <property name="messageConverters">  
+	        <list>  
+	            <bean class="com.hive.http.converter.json.MyMappingJackson2HttpMessageConverter">  
+	                <property name="supportedMediaTypes">  
+	                    <list>  
+	                        <value>text/html;charset=UTF-8</value>  
+	                        <value>application/json;charset=UTF-8</value>  
+	                    </list>  
+	                </property>  
+	            </bean>  
+	        </list>  
+	    </property>  
+	</bean> 
+    <!--配置拦截器, 多个拦截器,顺序执行 -->  
+	<mvc:interceptors>    
+	    <mvc:interceptor>    
+	        <!-- 匹配的是url路径， 如果不配置或/**,将拦截所有的Controller -->  
+	        <mvc:mapping path="/**" />  
+	        <bean class="com.hive.interceptor.MyInterceptor"></bean>    
+	    </mvc:interceptor>  
+	    <!-- 当设置多个拦截器时，先按顺序调用preHandle方法，然后逆序调用每个拦截器的postHandle和afterCompletion方法 -->  
+	</mvc:interceptors>  
     <import resource="springmvc-view.xml"/>
  
 </beans> 

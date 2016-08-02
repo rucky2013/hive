@@ -1,22 +1,22 @@
 package com.hive.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.hive.api.IUserService;
+import com.hive.apiversion.ApiVersion;
 import com.hive.model.User;
 
 @Controller
+@RequestMapping(value="user/{version}")
 public class UserController {
-	@Autowired
-	private IUserService userService;
 	@ResponseBody
-	@RequestMapping(value="getUser")
-	public List<User> getUser(){
-		return userService.getUser();
+	@ApiVersion(1)
+	@RequestMapping(value="insert")
+	public User insert(String abc){
+		System.out.println("abc="+abc);
+		User user=new User();
+		user.setUserName("张三");
+		return user;
 	}
 }
